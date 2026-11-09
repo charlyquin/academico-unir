@@ -6,17 +6,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./site:/usr/share/nginx/html:ro
-    networks:
-      - traefik-proxy
     labels:
       traefik.enable: "true"
-      traefik.docker.network: traefik-proxy
       traefik.http.routers.academico.rule: "Host(`academico.entornolab.cloud`)"
       traefik.http.routers.academico.entrypoints: websecure
+      traefik.http.routers.academico.tls: "true"
       traefik.http.routers.academico.tls.certresolver: letsencrypt
       traefik.http.routers.academico.service: academico
       traefik.http.services.academico.loadbalancer.server.port: "80"
-
-networks:
-  traefik-proxy:
-    external: true

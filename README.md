@@ -7,18 +7,17 @@ sus recursos junto a ella. Para recursos de una materia usa rutas relativas.
 
 ## Despliegue en la VPS
 
-El DNS debe apuntar a la VPS de Hostinger. El Compose usa la red externa
-`traefik-proxy` y el resolver `letsencrypt` del Traefik existente. Comprueba
-estos nombres en la VPS antes del primer despliegue.
+El DNS debe apuntar a la VPS de Hostinger. Nginx usa la red predeterminada de
+Compose. El Traefik existente, que corre en modo `host`, descubre el servicio
+mediante sus etiquetas de Docker y usa el resolver `letsencrypt`.
 
 Clona el repositorio completo en la VPS, entra en su carpeta y ejecuta:
 
 ```sh
-docker network inspect traefik-proxy
 docker compose config --quiet
 docker compose up -d
 docker compose ps
-curl --fail --show-error --silent --output /dev/null https://academico.entornolab.cloud/gobierno-dato/
+curl --fail --show-error --silent --output /dev/null https://academico.entornolab.cloud/gobierno-dato/activity2/
 ```
 
 El volumen `./site` se monta en modo de solo lectura. Se necesita el repositorio
